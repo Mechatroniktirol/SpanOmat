@@ -1,4 +1,4 @@
-const CACHE_NAME = "SpanOmat-v2";
+const CACHE_NAME = "SpanOmat-v3";
 
 self.addEventListener("install", event => {
   event.waitUntil(
@@ -6,7 +6,9 @@ self.addEventListener("install", event => {
       return cache.addAll([
         "./",
         "./index.html",
-        "./manifest.json"
+        "./manifest.json",
+        "./icon-192.png",
+        "./icon-512.png"
       ]);
     })
   );
