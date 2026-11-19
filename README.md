@@ -1,0 +1,2 @@
+# SpanOmat
+Zerspanungsrechner

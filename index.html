@@ -1,0 +1,424 @@
+<!--
+  ====================================================================
+  Span - O - Mat by Rohrmoser
+  Erstellt und Copyright by Christian Rohrmoser 2026
+  Tiroler Fachberufsschule für Wirtschaft und Technik Kufstein
+  Alle Rechte vorbehalten.
+  ====================================================================
+-->
+
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Span - O - Mat by Rohrmoser • TFBS Kufstein</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+  body { background: #121417; color: #f4f4f5; display: flex; flex-direction: column; align-items: center; min-height: 100dvh; padding: 20px 14px 24px; }
+  
+  .header-card { background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); border: 1px solid #334155; border-radius: 16px; padding: 16px; width: 100%; max-width: 480px; display: flex; align-items: center; gap: 14px; margin-bottom: 14px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+  .logo-box { background: #0284c7; color: #ffffff; border-radius: 12px; padding: 8px 10px; text-align: center; min-width: 78px; border: 1px solid #38bdf8; }
+  .logo-top { font-size: 16px; font-weight: 800; letter-spacing: 0.5px; line-height: 1.1; }
+  .logo-sub { font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; opacity: 0.95; }
+  .header-text h1 { font-size: 17px; font-weight: 800; color: #ffffff; line-height: 1.25; }
+  .header-text p { font-size: 11px; color: #94a3b8; margin-top: 2px; }
+  .author-tag { display: inline-block; background: rgba(56, 189, 248, 0.15); color: #38bdf8; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 6px; margin-top: 5px; }
+
+  .card { background: #1e2025; border: 1px solid #2e323b; border-radius: 16px; padding: 16px; width: 100%; max-width: 480px; margin-bottom: 12px; }
+  .section-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: #9ca3af; margin-bottom: 8px; }
+
+  select, input[type=number] { width: 100%; background: #141619; border: 1px solid #3f4451; border-radius: 10px; padding: 10px 12px; color: #ffffff; font-size: 15px; font-weight: 600; outline: none; }
+  select { margin-bottom: 14px; cursor: pointer; }
+  select:focus, input[type=number]:focus { border-color: #38bdf8; }
+
+  .tool-switch { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+  .tool-btn { background: #272a30; border: 2px solid #3f4451; border-radius: 12px; padding: 11px 10px; color: #d1d5db; text-align: center; cursor: pointer; transition: all 0.15s; }
+  .tool-btn.active-hss { background: rgba(245, 158, 11, 0.15); border-color: #f59e0b; color: #ffffff; }
+  .tool-btn.active-hm { background: rgba(16, 185, 129, 0.15); border-color: #10b981; color: #ffffff; }
+  .tool-btn strong { display: block; font-size: 15px; margin-bottom: 2px; }
+  .tool-btn span { font-size: 11px; opacity: 0.85; }
+
+  .mode-switch { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; background: #141619; padding: 4px; border-radius: 10px; margin-bottom: 14px; }
+  .mode-btn { background: transparent; border: none; color: #9ca3af; padding: 8px 4px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+  .mode-btn.active { background: #2e323b; color: #ffffff; }
+
+  .feed-presets { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+  .preset-btn { background: #272a30; border: 2px solid #3f4451; border-radius: 10px; padding: 8px 10px; color: #d1d5db; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.15s; text-align: center; }
+  .preset-btn span { display: block; font-size: 11px; font-weight: 500; opacity: 0.85; margin-top: 2px; }
+  .preset-btn.active-schlichten { background: rgba(56, 189, 248, 0.16); border-color: #38bdf8; color: #ffffff; }
+  .preset-btn.active-schruppen { background: rgba(249, 115, 22, 0.16); border-color: #f97316; color: #ffffff; }
+
+  .input-group { margin-bottom: 14px; }
+  .input-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; font-size: 13px; color: #e5e7eb; }
+  .val-badge { background: #2e323b; padding: 2px 8px; border-radius: 6px; font-weight: 700; color: #38bdf8; font-size: 13px; }
+  input[type=range] { width: 100%; accent-color: #38bdf8; height: 6px; margin-top: 8px; cursor: pointer; }
+
+  .quick-d { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 8px; }
+  .d-chip { background: #272a30; border: 1px solid #3f4451; color: #d1d5db; border-radius: 8px; padding: 6px 0; font-size: 12px; font-weight: 600; text-align: center; cursor: pointer; }
+  .d-chip:active { background: #0284c7; color: #ffffff; border-color: #38bdf8; }
+
+  .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+  .reset-btn { width: 100%; background: #272a30; border: 1px solid #4b5563; color: #e5e7eb; border-radius: 10px; padding: 10px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.15s; margin-top: 4px; }
+  .reset-btn:hover { background: #374151; border-color: #9ca3af; color: #ffffff; }
+  .reset-btn:active { transform: scale(0.99); }
+
+  .result-card { background: linear-gradient(135deg, #172554 0%, #1e1b4b 100%); border: 1px solid #3b82f6; border-radius: 16px; padding: 16px; width: 100%; max-width: 480px; }
+  .res-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+  .res-box { background: rgba(15, 23, 42, 0.65); border-radius: 12px; padding: 12px; text-align: center; border: 1px solid rgba(59, 130, 246, 0.3); }
+  .res-label { font-size: 11px; color: #93c5fd; text-transform: uppercase; font-weight: 600; }
+  .res-value { font-size: 24px; font-weight: 800; color: #ffffff; margin: 4px 0; }
+  .res-unit { font-size: 11px; color: #cbd5e1; }
+  .range-info { background: rgba(15, 23, 42, 0.5); border-radius: 10px; padding: 10px 12px; font-size: 12px; color: #dbeafe; line-height: 1.5; border-left: 3px solid #38bdf8; }
+
+  .formula-toggle { width: 100%; background: rgba(255,255,255,0.08); border: 1px solid rgba(147, 197, 253, 0.3); color: #bfdbfe; border-radius: 10px; padding: 8px; font-size: 12px; font-weight: 600; margin-top: 10px; cursor: pointer; }
+  .formula-box { display: none; margin-top: 8px; background: rgba(15, 23, 42, 0.75); border-radius: 10px; padding: 10px 12px; font-size: 12px; color: #e2e8f0; line-height: 1.6; font-family: monospace; white-space: pre-wrap; }
+
+  footer { margin-top: 12px; font-size: 11px; color: #6b7280; text-align: center; }
+</style>
+</head>
+
+<body>
+
+<div class="header-card">
+  <div class="logo-box">
+    <div class="logo-top">TFBS</div>
+    <div class="logo-sub">Kufstein</div>
+  </div>
+  <div class="header-text">
+    <h1>Span - O - Mat by Rohrmoser</h1>
+    <p>Tiroler Fachberufsschule für Wirtschaft &amp; Technik</p>
+    <div class="author-tag">Drehzahl- &amp; Vorschubrechner</div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="section-title">1. Werkstoff wählen</div>
+  <select id="werkstoffSelect" onchange="updateWerkstoff()">
+    <option value="stahl" selected>Baustahl / Automatenstahl (z. B. S235)</option>
+    <option value="edelstahl">Edelstahl / Rostfrei (z. B. V2A / 1.4301)</option>
+    <option value="alu">Aluminium / Al-Legierungen</option>
+    <option value="messing">Messing / Kunststoffe (POM, PA)</option>
+  </select>
+
+  <div class="section-title">2. Schneidstoff wählen</div>
+  <div class="tool-switch">
+    <div id="btnHSS" class="tool-btn active-hss" onclick="setTool('HSS')">
+      <strong>HSS</strong>
+      <span id="labelVcHSS">vc: 10 – 20 m/min</span>
+    </div>
+    <div id="btnHM" class="tool-btn" onclick="setTool('HM')">
+      <strong>Hartmetall (HM)</strong>
+      <span id="labelVcHM">vc: 100 – 200 m/min</span>
+    </div>
+  </div>
+
+  <div class="section-title">3. Bearbeitungsverfahren</div>
+  <div class="mode-switch">
+    <button id="modeFraesen" class="mode-btn active" onclick="setMode('fraesen')">Fräsen</button>
+    <button id="modeBohren" class="mode-btn" onclick="setMode('bohren')">Bohren</button>
+    <button id="modeDrehen" class="mode-btn" onclick="setMode('drehen')">Drehen</button>
+  </div>
+
+  <div class="input-group">
+    <div class="input-header">
+      <span id="labelDurchmesser">Fräser-Durchmesser d (mm)</span>
+      <span class="val-badge" id="badgeD">10 mm</span>
+    </div>
+    <input type="number" id="durchmesser" value="10" min="0.5" max="500" step="0.5" oninput="berechne()">
+    <div class="quick-d">
+      <div class="d-chip" onclick="setD(3)">Ø 3</div>
+      <div class="d-chip" onclick="setD(5)">Ø 5</div>
+      <div class="d-chip" onclick="setD(6)">Ø 6</div>
+      <div class="d-chip" onclick="setD(8)">Ø 8</div>
+      <div class="d-chip" onclick="setD(10)">Ø 10</div>
+      <div class="d-chip" onclick="setD(12)">Ø 12</div>
+      <div class="d-chip" onclick="setD(16)">Ø 16</div>
+      <div class="d-chip" onclick="setD(20)">Ø 20</div>
+    </div>
+  </div>
+
+  <div class="input-group">
+    <div class="input-header">
+      <span>Schnittgeschwindigkeit vc (m/min)</span>
+      <span class="val-badge" id="badgeVc">15 m/min</span>
+    </div>
+    <input type="range" id="vcSlider" min="10" max="20" step="1" value="15" oninput="berechne()">
+  </div>
+
+  <div id="feedPresetContainer" class="input-group">
+    <div class="input-header">
+      <span id="labelPresetMode">Bearbeitungsart (Vorschubwahl)</span>
+    </div>
+    <div class="feed-presets">
+      <button type="button" id="btnSchlichten" class="preset-btn active-schlichten" onclick="setFeedType('schlichten')">
+        Schlichten
+        <span id="hintSchlichten">fz = 0,05 mm</span>
+      </button>
+      <button type="button" id="btnSchruppen" class="preset-btn" onclick="setFeedType('schruppen')">
+        Schruppen
+        <span id="hintSchruppen">fz = 0,20 mm</span>
+      </button>
+    </div>
+  </div>
+
+  <div id="fraesInputs" class="row-2">
+    <div class="input-group" style="margin-bottom:0;">
+      <div class="input-header">
+        <span>Zähnezahl z</span>
+      </div>
+      <input type="number" id="zaehne" value="4" min="1" max="20" step="1" oninput="berechne()">
+    </div>
+    <div class="input-group" style="margin-bottom:0;">
+      <div class="input-header">
+        <span>Zahnvorschub fz (mm)</span>
+      </div>
+      <input type="number" id="fzInput" value="0.05" min="0.005" max="1" step="0.01" oninput="manualFeedChange()">
+    </div>
+  </div>
+
+  <div id="einzelVorschubInput" class="input-group" style="display:none; margin-bottom:0;">
+    <div class="input-header">
+      <span id="labelFInput">Vorschub pro Umdrehung f (mm/U)</span>
+    </div>
+    <input type="number" id="fInput" value="0.2" min="0.01" max="2" step="0.01" oninput="manualFeedChange()">
+  </div>
+
+  <div style="margin-top: 14px;">
+    <button type="button" class="reset-btn" onclick="resetAll()">↺ Zurücksetzen auf Ausgangswerte</button>
+  </div>
+</div>
+
+<div class="result-card">
+  <div class="res-grid">
+    <div class="res-box">
+      <div class="res-label">Drehzahl n</div>
+      <div class="res-value" id="resN">477</div>
+      <div class="res-unit">U/min (1/min)</div>
+    </div>
+    <div class="res-box">
+      <div class="res-label" id="resVfLabel">Vorschub vf</div>
+      <div class="res-value" id="resVf">95</div>
+      <div class="res-unit" id="resVfUnit">mm/min</div>
+    </div>
+  </div>
+
+  <div class="range-info" id="rangeInfo">
+    Empfohlener Richtwert für <strong>Baustahl (HSS)</strong>: vc = 10 – 20 m/min.
+  </div>
+
+  <button class="formula-toggle" onclick="toggleFormulas()">📐 Rechenweg &amp; Formeln ein-/ausblenden</button>
+  <div class="formula-box" id="formulaBox"></div>
+</div>
+
+
+
+
+<script>
+  const werkstoffDaten = {
+    stahl: {
+      name: "Baustahl / Automatenstahl",
+      HSS: { min: 10, max: 20, def: 15 },
+      HM:  { min: 100, max: 200, def: 150 }
+    },
+    edelstahl: {
+      name: "Edelstahl / Rostfrei (V2A)",
+      HSS: { min: 8, max: 15, def: 12 },
+      HM:  { min: 60, max: 120, def: 90 }
+    },
+    alu: {
+      name: "Aluminium / Al-Legierungen",
+      HSS: { min: 60, max: 120, def: 90 },
+      HM:  { min: 200, max: 400, def: 300 }
+    },
+    messing: {
+      name: "Messing / Kunststoffe",
+      HSS: { min: 40, max: 80, def: 60 },
+      HM:  { min: 150, max: 300, def: 220 }
+    }
+  };
+
+  let currentTool = 'HSS';
+  let currentMode = 'fraesen';
+  let currentFeedType = 'schlichten';
+
+  function setTool(tool) {
+    currentTool = tool;
+    document.getElementById('btnHSS').className = tool === 'HSS' ? 'tool-btn active-hss' : 'tool-btn';
+    document.getElementById('btnHM').className  = tool === 'HM'  ? 'tool-btn active-hm'  : 'tool-btn';
+    updateWerkstoff();
+  }
+
+  function setMode(mode) {
+    currentMode = mode;
+    document.getElementById('modeFraesen').className = mode === 'fraesen' ? 'mode-btn active' : 'mode-btn';
+    document.getElementById('modeBohren').className  = mode === 'bohren'  ? 'mode-btn active' : 'mode-btn';
+    document.getElementById('modeDrehen').className  = mode === 'drehen'  ? 'mode-btn active' : 'mode-btn';
+
+    const labelD = document.getElementById('labelDurchmesser');
+    const fraesDiv = document.getElementById('fraesInputs');
+    const einzelDiv = document.getElementById('einzelVorschubInput');
+    const presetContainer = document.getElementById('feedPresetContainer');
+
+    if (mode === 'fraesen') {
+      labelD.textContent = 'Fräser-Durchmesser d (mm)';
+      fraesDiv.style.display = 'grid';
+      einzelDiv.style.display = 'none';
+      presetContainer.style.display = 'block';
+      document.getElementById('hintSchlichten').textContent = 'fz = 0,05 mm';
+      document.getElementById('hintSchruppen').textContent  = 'fz = 0,20 mm';
+      if (currentFeedType) {
+        setFeedType(currentFeedType);
+        return;
+      }
+    } else if (mode === 'bohren') {
+      labelD.textContent = 'Bohrer-Durchmesser d (mm)';
+      fraesDiv.style.display = 'none';
+      einzelDiv.style.display = 'block';
+      presetContainer.style.display = 'none';
+      document.getElementById('fInput').value = 0.15;
+    } else {
+      labelD.textContent = 'Werkstück-Durchmesser d (mm)';
+      fraesDiv.style.display = 'none';
+      einzelDiv.style.display = 'block';
+      presetContainer.style.display = 'block';
+      document.getElementById('hintSchlichten').textContent = 'f = 0,20 mm/U';
+      document.getElementById('hintSchruppen').textContent  = 'f = 0,40 mm/U';
+      if (currentFeedType) {
+        setFeedType(currentFeedType);
+        return;
+      }
+    }
+    berechne();
+  }
+
+  function setFeedType(type) {
+    currentFeedType = type;
+    document.getElementById('btnSchlichten').className = type === 'schlichten' ? 'preset-btn active-schlichten' : 'preset-btn';
+    document.getElementById('btnSchruppen').className  = type === 'schruppen'  ? 'preset-btn active-schruppen'  : 'preset-btn';
+
+    if (currentMode === 'fraesen') {
+      document.getElementById('fzInput').value = (type === 'schlichten') ? 0.05 : 0.2;
+    } else if (currentMode === 'drehen') {
+      document.getElementById('fInput').value  = (type === 'schlichten') ? 0.2 : 0.4;
+    }
+    berechne();
+  }
+
+  function manualFeedChange() {
+    currentFeedType = null;
+    document.getElementById('btnSchlichten').className = 'preset-btn';
+    document.getElementById('btnSchruppen').className  = 'preset-btn';
+    berechne();
+  }
+
+  function setD(val) {
+    document.getElementById('durchmesser').value = val;
+    berechne();
+  }
+
+  function updateWerkstoff() {
+    const wKey = document.getElementById('werkstoffSelect').value;
+    const data = werkstoffDaten[wKey];
+
+    document.getElementById('labelVcHSS').textContent = `vc: ${data.HSS.min} – ${data.HSS.max} m/min`;
+    document.getElementById('labelVcHM').textContent  = `vc: ${data.HM.min} – ${data.HM.max} m/min`;
+
+    const range = data[currentTool];
+    const slider = document.getElementById('vcSlider');
+    slider.min = range.min;
+    slider.max = range.max;
+    slider.value = range.def;
+
+    berechne();
+  }
+
+  function resetAll() {
+    document.getElementById('werkstoffSelect').value = 'stahl';
+    currentTool = 'HSS';
+    currentMode = 'fraesen';
+    currentFeedType = 'schlichten';
+
+    document.getElementById('btnHSS').className = 'tool-btn active-hss';
+    document.getElementById('btnHM').className  = 'tool-btn';
+
+    document.getElementById('durchmesser').value = 10;
+    document.getElementById('zaehne').value = 4;
+
+    setMode('fraesen');
+    updateWerkstoff();
+  }
+
+  function berechne() {
+    const wKey = document.getElementById('werkstoffSelect').value;
+    const data = werkstoffDaten[wKey];
+    const range = data[currentTool];
+
+    const d = parseFloat(document.getElementById('durchmesser').value) || 1;
+    const vc = parseFloat(document.getElementById('vcSlider').value) || range.def;
+
+    document.getElementById('badgeD').textContent = `${d} mm`;
+    document.getElementById('badgeVc').textContent = `${vc} m/min`;
+
+    const n = (vc * 1000) / (Math.PI * d);
+    const nRounded = Math.round(n);
+
+    let vf = 0;
+    let formulaText = "";
+
+    if (currentMode === 'fraesen') {
+      const z = parseInt(document.getElementById('zaehne').value) || 1;
+      const fz = parseFloat(document.getElementById('fzInput').value) || 0;
+      const f = z * fz;
+      vf = n * f;
+
+      document.getElementById('resVfLabel').textContent = 'Vorschub vf';
+      document.getElementById('resVfUnit').textContent = 'mm/min';
+      document.getElementById('resVf').textContent = Math.round(vf);
+
+      formulaText =
+        `1. Drehzahl n:\n` +
+        `   n = (vc · 1000) / (π · d)\n` +
+        `   n = (${vc} · 1000) / (3,1416 · ${d}) = ${nRounded} 1/min\n\n` +
+        `2. Vorschub pro Umdrehung f:\n` +
+        `   f = z · fz = ${z} · ${fz} mm = ${f.toFixed(3)} mm/U\n\n` +
+        `3. Vorschubgeschwindigkeit vf:\n` +
+        `   vf = n · f = ${nRounded} · ${f.toFixed(3)} = ${Math.round(vf)} mm/min`;
+    } else {
+      const f = parseFloat(document.getElementById('fInput').value) || 0;
+      vf = n * f;
+
+      document.getElementById('resVfLabel').textContent = 'Vorschub vf';
+      document.getElementById('resVfUnit').textContent = 'mm/min';
+      document.getElementById('resVf').textContent = Math.round(vf);
+
+      formulaText =
+        `1. Drehzahl n:\n` +
+        `   n = (vc · 1000) / (π · d)\n` +
+        `   n = (${vc} · 1000) / (3,1416 · ${d}) = ${nRounded} 1/min\n\n` +
+        `2. Vorschubgeschwindigkeit vf:\n` +
+        `   vf = n · f = ${nRounded} · ${f} = ${Math.round(vf)} mm/min`;
+    }
+
+    document.getElementById('resN').textContent = nRounded;
+    document.getElementById('rangeInfo').innerHTML =
+      `Empfohlener Richtwert für <strong>${data.name} (${currentTool})</strong>: vc = ${range.min} – ${range.max} m/min.`;
+    document.getElementById('formulaBox').textContent = formulaText;
+  }
+
+  function toggleFormulas() {
+    const box = document.getElementById('formulaBox');
+    box.style.display = (box.style.display === 'block') ? 'none' : 'block';
+  }
+
+  updateWerkstoff();
+</script>
+<footer>
+  Span - O - Mat by Rohrmoser • TFBS Kufstein<br>
+  &copy; 2026 Christian Rohrmoser – Alle Rechte vorbehalten
+</footer>
+
+</body>
+</html>
